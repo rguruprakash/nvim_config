@@ -62,7 +62,7 @@ nmap <leader>lg :LazyGit<cr>
 ]])
 vim.opt.termguicolors = true
 
-require("lazy").setup('config')
+require("lazy").setup('plugins')
 require("custom.notes-scratch")
 require("custom.treesitter")
 
