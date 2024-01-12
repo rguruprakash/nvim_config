@@ -1,0 +1,2 @@
+Close all buffers | :%bd 
+Search in selection | /\%Vpattern_to_search

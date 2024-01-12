@@ -1,3 +1,71 @@
+vim.cmd([[
+syntax on
+
+set rnu
+set number
+set autoindent
+set smartindent
+set expandtab
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set shiftround
+set smarttab
+set nobackup
+set nowritebackup
+set clipboard=unnamed " share clipboard
+set autoread
+set cmdheight=2
+let mapleader=","
+set mouse=""
+set cursorline
+set noswapfile
+set updatetime=100
+
+" fugitive
+let g:github_enterprise_urls = ['https://github.bus.zalan.do']
+
+" My shortcuts
+nmap _ :NvimTreeToggle<cr>
+nmap z= :Telescope spell_suggest<cr>
+nmap <C-f> :lua require("telescope").extensions.live_grep_args.live_grep_args()<cr>
+nmap <C-p> :lua require"custom.telescope".project_files()<cr>
+nmap <C-l> :Telescope treesitter<cr>
+nmap <leader>- :NvimTreeFindFile!<cr>
+nmap <leader>f :Telescope filetypes<cr>
+nmap <leader>r :luafile %<cr>
+nmap <leader>c :tabe ~/.config/nvim/lua/plugins/init.lua<cr>
+nmap <leader>p :lua require'telescope'.extensions.projects.projects{}<cr>
+nmap <leader>tr :Neotest run<cr>
+nmap <leader>ts :Neotest summary<cr>
+nmap gsn :Gitsigns next_hunk<cr>
+nmap gsp :Gitsigns preview_hunk<cr>
+nmap gsr :Gitsigns reset_hunk<cr>
+nmap <leader>lg :LazyGit<cr>
+nmap <leader>ass :Autosession search<cr>
+"command! D :DiffviewOpen
+"command! Dfh :DiffviewFileHistory
+"command! Dc :tabc
+]])
+
+-- Move line blocks
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+-- Keep cursor on middle when scrolling
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+
+-- Keep cursor on middle when searching
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
+
+-- paste without losing what was in the register
+-- vim.keymap.set("x", "<space>p", "\"_dP")
+
+-- Find and replace text under cursor
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+
 return {
   "simeji/winresizer",
   "mg979/vim-visual-multi",
@@ -8,23 +76,13 @@ return {
   "tpope/vim-surround",
   "nvim-treesitter/nvim-treesitter",
   "easymotion/vim-easymotion",
-  -- use({
-  -- 	"jackMort/ChatGPT.nvim",
-  -- 	config = function()
-  -- 		require("chatgpt").setup()
-  -- 	end,
-  -- 	requires = {
-  -- 		"MunifTanjim/nui.nvim",
-  -- 		"nvim-lua/plenary.nvim",
-  -- 		"nvim-telescope/telescope.nvim",
-  -- 	},
-  -- })
-  -- use({
-  -- 	"m4xshen/hardtime.nvim",
-  -- 	config = function()
-  -- 		require("hardtime").setup()
-  -- 	end,
-  -- })
+  "mbbill/undotree",
+  -- {
+  --   "m4xshen/hardtime.nvim",
+  --   config = function()
+  --     require("hardtime").setup()
+  --   end,
+  -- },
   {
     "folke/which-key.nvim",
     config = function()
@@ -45,37 +103,20 @@ return {
   },
   "github/copilot.vim",
   {
-    "nvim-neotest/neotest",
+    "kristijanhusak/vim-dadbod-ui",
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "antoinemadec/FixCursorHold.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-neotest/neotest-jest",
+      { "tpope/vim-dadbod",                     lazy = true },
+      { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
     },
-    config = function()
-      require("neotest").setup({
-        adapters = {
-          require("neotest-jest")({
-            jestCommand = require("neotest-jest.jest-util").getJestCommand(vim.fn.expand("%:p:h"))
-                .. " -i --detectOpenHandles",
-            -- jestConfigFile = "custom.jest.config.ts",
-            -- env = {
-            --   NODE_ENV = "testing",
-            --   PG_HOST = "localhost",
-            --   PG_HOST_REPLICA = "localhost",
-            --   PG_USER = "postgres",
-            --   PG_PASSWORD = "postgres",
-            --   PG_DATABASE = "rms",
-            --   PG_PORT = 5433,
-            --   PGPASSWORD = "postgres",
-            --   TRANSLATIONS_FILE_PATH = "./integration_tests/translations.json",
-            -- },
-            cwd = function()
-              return vim.fn.getcwd()
-            end,
-          }),
-        },
-      })
+    cmd = {
+      "DBUI",
+      "DBUIToggle",
+      "DBUIAddConnection",
+      "DBUIFindBuffer",
+    },
+    init = function()
+      -- Your DBUI configuration
+      vim.g.db_ui_use_nerd_fonts = 1
     end,
   },
 }
