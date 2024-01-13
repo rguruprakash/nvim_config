@@ -15,7 +15,6 @@ set nobackup
 set nowritebackup
 set clipboard=unnamed " share clipboard
 set autoread
-set cmdheight=2
 let mapleader=","
 set mouse=""
 set cursorline
@@ -53,12 +52,12 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 -- Keep cursor on middle when scrolling
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
+-- vim.keymap.set("n", "<C-d>", "<C-d>zz")
+-- vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
 -- Keep cursor on middle when searching
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
+-- vim.keymap.set("n", "n", "nzzzv")
+-- vim.keymap.set("n", "N", "Nzzzv")
 
 -- paste without losing what was in the register
 -- vim.keymap.set("x", "<space>p", "\"_dP")
