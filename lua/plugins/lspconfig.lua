@@ -1,55 +1,55 @@
 local on_attach = function(client, bufnr)
-  local opts = { noremap = true, silent = true }
-  vim.keymap.set("n", "<space>e", require("telescope.builtin").diagnostics, opts)
-  vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
+	local opts = { noremap = true, silent = true }
+	vim.keymap.set("n", "<space>e", require("telescope.builtin").diagnostics, opts)
+	vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
 
-  -- Enable completion triggered by <c-x><c-o>
-  local builtin = require("telescope.builtin")
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+	-- Enable completion triggered by <c-x><c-o>
+	local builtin = require("telescope.builtin")
+	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap = true, silent = true, buffer = bufnr }
-  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set("n", "gd", function()
-    builtin.lsp_definitions({ show_line = false })
-  end, bufopts)
-  vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-  vim.keymap.set("n", "gi", function()
-    builtin.lsp_implementations({ show_line = false })
-  end, bufopts)
-  vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set("n", "<space>wl", function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
-  vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set("n", "gr", function()
-    builtin.lsp_references({ show_line = false })
-  end, {})
-  vim.keymap.set("n", "<space>f", function()
-    vim.lsp.buf.format({ async = false })
-  end, bufopts)
-  vim.keymap.set("v", "<space>f", function()
-    vim.lsp.buf.range_formatting({ async = true })
-  end, bufopts)
+	-- Mappings.
+	-- See `:help vim.lsp.*` for documentation on any of the below functions
+	local bufopts = { noremap = true, silent = true, buffer = bufnr }
+	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+	vim.keymap.set("n", "gd", function()
+		builtin.lsp_definitions({ show_line = false })
+	end, bufopts)
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+	vim.keymap.set("n", "gi", function()
+		builtin.lsp_implementations({ show_line = false })
+	end, bufopts)
+	vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
+	vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
+	vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
+	vim.keymap.set("n", "<space>wl", function()
+		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+	end, bufopts)
+	vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
+	vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
+	vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
+	vim.keymap.set("n", "gr", function()
+		builtin.lsp_references({ show_line = false })
+	end, {})
+	vim.keymap.set("n", "<space>f", function()
+		vim.lsp.buf.format({ async = false })
+	end, bufopts)
+	vim.keymap.set("v", "<space>f", function()
+		vim.lsp.buf.range_formatting({ async = true })
+	end, bufopts)
 
-  if client.server_capabilities.documentHighlightProvider then
-    vim.cmd([[
+	if client.server_capabilities.documentHighlightProvider then
+		vim.cmd([[
       autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
       autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
       autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
     ]])
-  end
+	end
 end
 
 local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
 for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+	local hl = "DiagnosticSign" .. type
+	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
 return {
@@ -59,6 +59,10 @@ return {
 		config = function()
 			require("neodev").setup()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities() -- from nvim-cmp plugin
+			capabilities.textDocument.foldingRange = {
+				dynamicRegistration = false,
+				lineFoldingOnly = true,
+			}
 			require("lspconfig").tsserver.setup({
 				on_attach = on_attach,
 				capabilities = capabilities,
@@ -127,7 +131,7 @@ return {
 		end,
 	},
 	{
-    "nvimtools/none-ls.nvim",
+		"nvimtools/none-ls.nvim",
 		-- "jose-elias-alvarez/null-ls.nvim",
 		config = function()
 			require("null-ls").setup({

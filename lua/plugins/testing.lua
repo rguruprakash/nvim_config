@@ -19,6 +19,9 @@ return {
       },
     }, neotest_ns)
     require("neotest").setup({
+      summary = {
+        open = "botright vsplit"
+      },
       adapters = {
         require("neotest-go"),
         require("neotest-jest")({

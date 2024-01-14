@@ -83,11 +83,12 @@ return {
           end, { "i", "s" }),
         }),
         sources = {
+          { name = "copilot",                 priority = 1200, max_item_count = 5 },
+          { name = "nvim_lsp_signature_help", priority = 1100 },
           { name = "nvim_lsp",                priority = 1000 },
-          { name = "nvim_lsp_signature_help", priority = 900 },
           { name = "luasnip",                 priority = 800 },
-          { name = "buffer",                  priority = 700 },
-          { name = "path",                    priority = 600 },
+          { name = "buffer",                  priority = 700,  max_item_count = 5 },
+          { name = "path",                    priority = 600,  max_item_count = 3 },
           { name = "nvim_lua",                priority = 500 },
         },
       })
