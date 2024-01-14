@@ -1,60 +1,60 @@
 return {
   "Mofiqul/vscode.nvim",
   {
-  	"catppuccin/nvim",
-  	name = "catppuccin",
-  	priority = 1000,
-  	config = function()
-  		require("catppuccin").setup({
-  			flavour = "frappe",
-  			transparent_background = true,
-  			styles = {
-  				comments = { "italic" },
-  			},
-  			integrations = {
-  				cmp = true,
-  				gitsigns = true,
-  				nvimtree = true,
-  				treesitter = true,
-  				mason = true,
-  				noice = true,
-  				notify = true,
-  				dap = true,
-  				dap_ui = true,
-  				symbols_outline = true,
-  				telescope = {
-  					enabled = true,
-  					-- style = "nvchad"
-  				},
-  				lsp_trouble = true,
-  				which_key = true,
-  				native_lsp = {
-  					enabled = true,
-  					virtual_text = {
-  						errors = { "italic" },
-  						hints = { "italic" },
-  						warnings = { "italic" },
-  						information = { "italic" },
-  					},
-  					underlines = {
-  						errors = { "underline" },
-  						hints = { "underline" },
-  						warnings = { "underline" },
-  						information = { "underline" },
-  					},
-  					inlay_hints = {
-  						background = true,
-  					},
-  				},
-  				indent_blankline = {
-  					enabled = true,
-  					scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
-  					colored_indent_levels = false,
-  				},
-  			},
-  		})
-  		vim.cmd.colorscheme("catppuccin-frappe")
-  	end,
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    config = function()
+      require("catppuccin").setup({
+        flavour = "frappe",
+        transparent_background = true,
+        styles = {
+          comments = { "italic" },
+        },
+        integrations = {
+          cmp = true,
+          gitsigns = true,
+          nvimtree = true,
+          treesitter = true,
+          mason = true,
+          noice = true,
+          notify = true,
+          dap = true,
+          dap_ui = true,
+          symbols_outline = true,
+          telescope = {
+            enabled = true,
+            -- style = "nvchad"
+          },
+          lsp_trouble = true,
+          which_key = true,
+          native_lsp = {
+            enabled = true,
+            virtual_text = {
+              errors = { "italic" },
+              hints = { "italic" },
+              warnings = { "italic" },
+              information = { "italic" },
+            },
+            underlines = {
+              errors = { "underline" },
+              hints = { "underline" },
+              warnings = { "underline" },
+              information = { "underline" },
+            },
+            inlay_hints = {
+              background = true,
+            },
+          },
+          indent_blankline = {
+            enabled = true,
+            scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
+            colored_indent_levels = false,
+          },
+        },
+      })
+      vim.cmd.colorscheme("catppuccin-frappe")
+    end,
   },
   "stevearc/dressing.nvim", -- improves default vim.ui interfaces
   {
@@ -64,7 +64,6 @@ return {
       -- "rcarriga/nvim-notify",
     },
     config = function()
-
       -- require("notify").setup({
       --   top_down = false,
       -- })
