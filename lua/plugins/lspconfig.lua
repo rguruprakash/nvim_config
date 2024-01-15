@@ -27,6 +27,14 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
 	vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
 	vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
+	vim.keymap.set("n", "<space>oi", function()
+		local params = {
+			command = "_typescript.organizeImports",
+			arguments = { vim.api.nvim_buf_get_name(0) },
+			title = "",
+		}
+		vim.lsp.buf.execute_command(params)
+	end)
 	vim.keymap.set("n", "gr", function()
 		builtin.lsp_references({ show_line = false })
 	end, {})
