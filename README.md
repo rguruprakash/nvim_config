@@ -4,6 +4,8 @@
 <a href="https://dotfyle.com/rguruprakash/nvimconfig"><img src="https://dotfyle.com/rguruprakash/nvimconfig/badges/leaderkey?style=flat" /></a>
 <a href="https://dotfyle.com/rguruprakash/nvimconfig"><img src="https://dotfyle.com/rguruprakash/nvimconfig/badges/plugin-manager?style=flat" /></a>
 
+<img width="1512" alt="Screenshot 2024-01-15 at 6 01 42 PM" src="https://github.com/rguruprakash/nvim_config/assets/9963717/9b7f8b8c-3118-47b2-84d3-f2ce3753f48c">
+
 
 ## Install Instructions
 
