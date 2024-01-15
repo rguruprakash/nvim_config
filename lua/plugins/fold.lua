@@ -35,8 +35,8 @@ return {
 
       require("ufo").setup({
         provider_selector = function()
-          -- return { "treesitter", "indent" }
-          return customizeSelector
+          return { "treesitter", "indent" }
+          -- return customizeSelector
         end,
         fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
           local newVirtText = {}

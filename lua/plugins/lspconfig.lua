@@ -59,10 +59,10 @@ return {
 		config = function()
 			require("neodev").setup()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities() -- from nvim-cmp plugin
-			capabilities.textDocument.foldingRange = {
-				dynamicRegistration = false,
-				lineFoldingOnly = true,
-			}
+			-- capabilities.textDocument.foldingRange = {
+			-- 	dynamicRegistration = false,
+			-- 	lineFoldingOnly = true,
+			-- }
 			require("lspconfig").tsserver.setup({
 				on_attach = on_attach,
 				capabilities = capabilities,
