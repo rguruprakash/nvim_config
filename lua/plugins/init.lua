@@ -125,4 +125,13 @@ return {
       vim.g.db_ui_use_nerd_fonts = 1
     end,
   },
+  {
+    "Wansmer/treesj",
+    keys = { "<space>m", "<space>j", "<space>s" },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("treesj").setup({ --[[ your config ]]
+      })
+    end,
+  },
 }
