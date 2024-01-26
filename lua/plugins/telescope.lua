@@ -4,13 +4,8 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope-live-grep-args.nvim",
-			-- "AckslD/nvim-neoclip.lua",
-			-- {
-			--   "nvim-telescope/telescope-fzf-native.nvim",
-			--   run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-			-- },
-			-- { "danielfalk/smart-open.nvim", requires = "tami5/sqlite.lua" }
 		},
+    event = "VeryLazy",
 		config = function()
 			local telescope = require("telescope")
 			local lga_actions = require("telescope-live-grep-args.actions")
@@ -38,28 +33,38 @@ return {
 								["<c-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
 							},
 						},
-						-- ... also accepts theme settings, for example:
-						-- theme = "dropdown", -- use dropdown theme
-						-- theme = { }, -- use own theme spec
-						-- layout_config = { mirror=true }, -- mirror preview pane
 					},
-					-- ["frecency"] = {
-					-- show_scores = true,
-					-- default_workspace = "CWD",
-					-- },
-					-- fzf = {
-					--   fuzzy = true, -- false will only do exact matching
-					--   override_generic_sorter = true, -- override the generic sorter
-					--   override_file_sorter = true, -- override the file sorter
-					--   case_mode = "smart_case", -- or "ignore_case" or "respect_case". the default case_mode is "smart_case"
-					-- },
 				},
 			})
-			-- telescope.load_extension("neoclip")
-			-- telescope.load_extension("fzf")
-			telescope.load_extension("projects")
 			telescope.load_extension("live_grep_args")
-			-- telescope.load_extension("smart_open")
 		end,
+		keys = {
+			{
+				"<C-f>",
+				":lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>",
+				desc = "Search in project",
+			},
+			{
+				"<C-l>",
+				":Telescope treesitter<cr>",
+				desc = "Find document symbols",
+			},
+			{
+				"<C-h>",
+				":Telescope help_tags<cr>",
+				desc = "Help tags",
+			},
+			{
+				"<leader>f",
+				":Telescope filetypes<cr>",
+				desc = "File types",
+			},
+			{
+				"z=",
+				":Telescope spell_suggest<cr>",
+				desc = "Spell suggest",
+			},
+			{ "<leader>p", ":lua require'telescope'.extensions.projects.projects{}<cr>", desc = "Find project" },
+		},
 	},
 }

@@ -1,6 +1,7 @@
 return {
 	{
 		"kyazdani42/nvim-tree.lua",
+		event = "VeryLazy",
 		dependencies = "nvim-tree/nvim-web-devicons",
 		config = function()
 			local HEIGHT_RATIO = 0.8 -- You can change this
@@ -59,5 +60,9 @@ return {
 				end,
 			})
 		end,
+		keys = {
+			{ "_", ":NvimTreeToggle<CR>", desc = "File tree toggle" },
+			{ "<leader>-", ":NvimTreeFindFile!<CR>", desc = "Find file in file tree" },
+		},
 	},
 }

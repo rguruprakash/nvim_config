@@ -29,18 +29,28 @@ return {
 	-- }) -- git diff plugin
 	{
 		"lewis6991/gitsigns.nvim",
+		event = "VeryLazy",
 		config = function()
 			require("gitsigns").setup()
 		end,
+		keys = {
+			{ "gsn", ":Gitsigns next_hunk<cr>", desc = "Git next hunk" },
+			{ "gsp", ":Gitsigns prev_hunk<cr>", desc = "Git prev hunk" },
+			{ "gsr", ":Gitsigns reset_hunk<cr>", desc = "Git rest hunk" },
+		},
 	},
 	{
 		"kdheepak/lazygit.nvim",
 		-- optional for floating window border decoration
+		event = "VeryLazy",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
-    config = function ()
-      require('telescope').load_extension('lazygit')
-    end
+		config = function()
+			require("telescope").load_extension("lazygit")
+		end,
+		keys = {
+			{ "<leader>lg", ":LazyGit<cr>", desc = "Lazygit" },
+		},
 	},
 }

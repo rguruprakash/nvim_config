@@ -24,51 +24,9 @@ set laststatus=3
 
 " fugitive
 let g:github_enterprise_urls = ['https://github.bus.zalan.do']
-
-" My shortcuts
-nmap _ :NvimTreeToggle<cr>
-nmap z= :Telescope spell_suggest<cr>
-nmap <C-f> :lua require("telescope").extensions.live_grep_args.live_grep_args()<cr>
-nmap <C-p> :lua require"custom.telescope".project_files()<cr>
-nmap <C-l> :Telescope treesitter<cr>
-nmap <C-h> :Telescope help_tags<cr>
-nmap <leader>- :NvimTreeFindFile!<cr>
-nmap <leader>f :Telescope filetypes<cr>
-nmap <leader>r :luafile %<cr>
-nmap <leader>c :e ~/.config/nvim/lua/plugins/init.lua<cr>
-nmap <leader>p :lua require'telescope'.extensions.projects.projects{}<cr>
-nmap <leader>tr :Neotest run<cr>
-nmap <leader>ts :Neotest summary toggle<cr>
-nmap <leader>nh :Telescope noice<cr>
-nmap gsn :Gitsigns next_hunk<cr>
-nmap gsp :Gitsigns preview_hunk<cr>
-nmap gsr :Gitsigns reset_hunk<cr>
-nmap <leader>lg :LazyGit<cr>
-nmap <leader>ass :Autosession search<cr>
 ]])
 
-vim.keymap.set("n", "<space>cc", ":CopilotChat ")
-
--- Move line blocks
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-
--- Keep cursor on middle when scrolling
--- vim.keymap.set("n", "<C-d>", "<C-d>zz")
--- vim.keymap.set("n", "<C-u>", "<C-u>zz")
-
--- Keep cursor on middle when searching
--- vim.keymap.set("n", "n", "nzzzv")
--- vim.keymap.set("n", "N", "Nzzzv")
-
--- paste without losing what was in the registergister
-vim.keymap.set("x", "<space>p", '"_dP')
-
--- Find and replace text under cursor
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-
 return {
-
 	{
 		"b0o/incline.nvim",
 		opts = {},
@@ -85,21 +43,6 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 	"easymotion/vim-easymotion",
 	"mbbill/undotree",
-	-- {
-	--   "numToStr/FTerm.nvim",
-	--   config = function()
-	--     require("FTerm").setup({
-	--       border = "single",
-	--       dimensions = {
-	--         height = 1,
-	--         width = 1,
-	--       },
-	--     })
-
-	--     vim.keymap.set("n", "<C-i>", '<CMD>lua require("FTerm").toggle()<CR>')
-	--     vim.keymap.set("t", "<C-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
-	--   end,
-	-- },
 	{
 		"iamcco/markdown-preview.nvim",
 		build = function()

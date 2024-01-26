@@ -113,5 +113,8 @@ return {
 				},
 			})
 		end,
+		keys = {
+			{ "<leader>nh", ":Telescope noice<cr>", desc = "Messages history (noice)" },
+		},
 	},
 }

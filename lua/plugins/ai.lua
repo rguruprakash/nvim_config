@@ -19,7 +19,7 @@ return {
 		"rguruprakash/CopilotChat.nvim",
 		opts = {
 			mode = "splitffer", -- newbuffer or split  , default: newbu
-			{
+			prompts = {
 				-- Code related prompts
 				Explain = "Please explain how the following code works.",
 				Review = "Please review the following code and provide suggestions for improvement.",
@@ -39,6 +39,7 @@ return {
 		end,
 		event = "VeryLazy",
 		keys = {
+      { "<space>cc", ":CopilotChat ", desc = "CopilotChat" },
       { "<space>cce", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
       { "<space>cct", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
       { "<space>ccr", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
