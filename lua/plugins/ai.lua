@@ -18,7 +18,7 @@ return {
 	{
 		"rguruprakash/CopilotChat.nvim",
 		opts = {
-			mode = "splitffer", -- newbuffer or split  , default: newbu
+			mode = "split", -- newbuffer or split  , default: newbu
 			prompts = {
 				-- Code related prompts
 				Explain = "Please explain how the following code works.",
