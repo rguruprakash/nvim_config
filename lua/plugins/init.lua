@@ -20,12 +20,12 @@ set mouse=""
 set cursorline
 set noswapfile
 set updatetime=100
+set laststatus=3
 
 " fugitive
 let g:github_enterprise_urls = ['https://github.bus.zalan.do']
 
 " My shortcuts
-" cnoremap h vert bo help
 nmap _ :NvimTreeToggle<cr>
 nmap z= :Telescope spell_suggest<cr>
 nmap <C-f> :lua require("telescope").extensions.live_grep_args.live_grep_args()<cr>
@@ -45,12 +45,9 @@ nmap gsp :Gitsigns preview_hunk<cr>
 nmap gsr :Gitsigns reset_hunk<cr>
 nmap <leader>lg :LazyGit<cr>
 nmap <leader>ass :Autosession search<cr>
-"command! D :DiffviewOpen
-"command! Dfh :DiffviewFileHistory
-"command! Dc :tabc
-
-autocmd FileType help wincmd L
 ]])
+
+vim.keymap.set("n", "<space>cc", ":CopilotChat ")
 
 -- Move line blocks
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -64,74 +61,81 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- vim.keymap.set("n", "n", "nzzzv")
 -- vim.keymap.set("n", "N", "Nzzzv")
 
--- paste without losing what was in the register
--- vim.keymap.set("x", "<space>p", "\"_dP")
+-- paste without losing what was in the registergister
+vim.keymap.set("x", "<space>p", '"_dP')
 
 -- Find and replace text under cursor
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 return {
-  "simeji/winresizer",
-  "mg979/vim-visual-multi",
-  "tpope/vim-commentary",
-  "tpope/vim-fugitive",
-  "tpope/vim-rhubarb",
-  "nvim-lua/plenary.nvim",
-  "tpope/vim-surround",
-  "nvim-treesitter/nvim-treesitter",
-  "easymotion/vim-easymotion",
-  "mbbill/undotree",
-  -- {
-  --   "m4xshen/hardtime.nvim",
-  --   config = function()
-  --     require("hardtime").setup()
-  --   end,
-  -- },
-  {
-    "iamcco/markdown-preview.nvim",
-    build = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-  },
-  -- "github/copilot.vim",
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({})
-    end,
-  },
-  {
-    "zbirenbaum/copilot-cmp",
-    config = function()
-      require("copilot_cmp").setup()
-    end,
-  },
-  {
-    "kristijanhusak/vim-dadbod-ui",
-    dependencies = {
-      { "tpope/vim-dadbod",                     lazy = true },
-      { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
-    },
-    cmd = {
-      "DBUI",
-      "DBUIToggle",
-      "DBUIAddConnection",
-      "DBUIFindBuffer",
-    },
-    init = function()
-      -- Your DBUI configuration
-      vim.g.db_ui_use_nerd_fonts = 1
-    end,
-  },
-  {
-    "Wansmer/treesj",
-    keys = { "<space>m", "<space>j", "<space>s" },
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    config = function()
-      require("treesj").setup({ --[[ your config ]]
-      })
-    end,
-  },
+
+	{
+		"b0o/incline.nvim",
+		opts = {},
+		-- Optional: Lazy load Incline
+		event = "VeryLazy",
+	},
+	"simeji/winresizer",
+	"mg979/vim-visual-multi",
+	"tpope/vim-commentary",
+	"tpope/vim-fugitive",
+	"tpope/vim-rhubarb",
+	"nvim-lua/plenary.nvim",
+	"tpope/vim-surround",
+	"nvim-treesitter/nvim-treesitter",
+	"easymotion/vim-easymotion",
+	"mbbill/undotree",
+	-- {
+	--   "numToStr/FTerm.nvim",
+	--   config = function()
+	--     require("FTerm").setup({
+	--       border = "single",
+	--       dimensions = {
+	--         height = 1,
+	--         width = 1,
+	--       },
+	--     })
+
+	--     vim.keymap.set("n", "<C-i>", '<CMD>lua require("FTerm").toggle()<CR>')
+	--     vim.keymap.set("t", "<C-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+	--   end,
+	-- },
+	{
+		"iamcco/markdown-preview.nvim",
+		build = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+	},
+	{
+		"kristijanhusak/vim-dadbod-ui",
+		dependencies = {
+			{ "tpope/vim-dadbod", lazy = true },
+			{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+		},
+		cmd = {
+			"DBUI",
+			"DBUIToggle",
+			"DBUIAddConnection",
+			"DBUIFindBuffer",
+		},
+		init = function()
+			-- Your DBUI configuration
+			vim.g.db_ui_use_nerd_fonts = 1
+		end,
+	},
+	{
+		"Wansmer/treesj",
+		keys = { "<space>m", "<space>j", "<space>s" },
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		config = function()
+			require("treesj").setup({ --[[ your config ]]
+			})
+		end,
+	},
+	{
+		"windwp/nvim-ts-autotag",
+		config = function()
+			require("nvim-ts-autotag").setup()
+		end,
+	},
 }

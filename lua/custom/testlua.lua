@@ -27,39 +27,57 @@
 
 -- M.main()
 
-local Popup = require("nui.popup")
-local event = require("nui.utils.autocmd").event
+-- local Popup = require("nui.popup")
+-- local event = require("nui.utils.autocmd").event
 
-local popup = Popup({
-  enter = true,
-  focusable = true,
-  border = {
-    style = "rounded",
-  },
-  position = "50%",
-  size = {
-    width = "80%",
-    height = "60%",
-  },
-})
+-- local popup = Popup({
+--   enter = true,
+--   focusable = true,
+--   border = {
+--     style = "rounded",
+--   },
+--   position = "50%",
+--   size = {
+--     width = "80%",
+--     height = "60%",
+--   },
+-- })
 
 -- mount/open the component
-popup:mount()
+-- popup:mount()
 
 -- unmount component when cursor leaves buffer
-popup:on(event.BufLeave, function()
-  popup:unmount()
-end)
+-- popup:on(event.BufLeave, function()
+--   popup:unmount()
+-- end)
 
 -- pcall()
 -- set content
 -- vim.api.nvim_buf_set_lines(popup.bufnr, 0, 1, false, { "Hello World" })
 -- vim.cmd("buffer" .. popup.bufnr)
-vim.api.nvim_set_current_buf(popup.bufnr)
-vim.cmd([[
-    setlocal filetype=help
-    setlocal buftype=help
-    help vert
-]])
+-- vim.api.nvim_set_current_buf(popup.bufnr)
+-- vim.cmd([[
+--     setlocal filetype=help
+--     setlocal buftype=help
+--     help vert
+-- ]])
 -- vim.api.nvim_exec2("Neotest summary", { false })
 -- vim.cmd([[ execute 'Neotest summary' ]])
+--
+-- Create a new empty buffer
+local buf = vim.api.nvim_create_buf(false, true)
+
+-- Define the window properties
+local win_opts = {
+	relative = "editor",
+	width = 20,
+	height = 10,
+	col = 10,
+	row = 10,
+	style = "minimal",
+	bufpos = { 1, 1 },
+	focusable = true,
+}
+
+-- Create the floating window
+local win = vim.api.nvim_open_win(buf, true, win_opts)

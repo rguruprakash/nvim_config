@@ -1,7 +1,11 @@
 local on_attach = function(client, bufnr)
 	local opts = { noremap = true, silent = true }
 	vim.keymap.set("n", "<space>e", require("telescope.builtin").diagnostics, opts)
-	vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
+	vim.keymap.set("n", "<leader>e", function()
+		vim.diagnostic.open_float({
+			source = true,
+		})
+	end, opts)
 
 	-- Enable completion triggered by <c-x><c-o>
 	local builtin = require("telescope.builtin")
@@ -39,7 +43,7 @@ local on_attach = function(client, bufnr)
 		builtin.lsp_references({ show_line = false })
 	end, {})
 	vim.keymap.set("n", "<space>f", function()
-		vim.lsp.buf.format({ async = false })
+		vim.lsp.buf.format({ async = true })
 	end, bufopts)
 	vim.keymap.set("v", "<space>f", function()
 		vim.lsp.buf.range_formatting({ async = true })
@@ -66,11 +70,13 @@ return {
 		dependencies = { "nvim-cmp", "neodev.nvim" },
 		config = function()
 			require("neodev").setup()
-			local capabilities = require("cmp_nvim_lsp").default_capabilities() -- from nvim-cmp plugin
+			local capabilities = vim.lsp.protocol.make_client_capabilities()
+			capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities) -- from nvim-cmp plugin
 			capabilities.textDocument.foldingRange = {
 				dynamicRegistration = false,
 				lineFoldingOnly = true,
 			}
+
 			require("lspconfig").tsserver.setup({
 				on_attach = on_attach,
 				capabilities = capabilities,
@@ -136,21 +142,42 @@ return {
 				on_attach = on_attach,
 				capabilities = capabilities,
 			})
+
+			capabilities.textDocument.completion.completionItem.snippetSupport = true
+			require("lspconfig").jsonls.setup({
+				capabilities = capabilities,
+			})
+
+			require("lspconfig.ui.windows").default_options.border = "single"
 		end,
 	},
 	{
 		"nvimtools/none-ls.nvim",
 		-- "jose-elias-alvarez/null-ls.nvim",
 		config = function()
-			require("null-ls").setup({
+			local null_ls = require("null-ls")
+			local code_actions = null_ls.builtins.code_actions
+			local diagnostics = null_ls.builtins.diagnostics
+			local formatting = null_ls.builtins.formatting
+			local hover = null_ls.builtins.hover
+			local completion = null_ls.builtins.completion
+			null_ls.setup({
+        border = "single",
 				on_attach = on_attach,
 				sources = {
-					require("null-ls").builtins.formatting.pg_format,
-					-- require("null-ls").builtins.formatting.jq,
-					require("null-ls").builtins.formatting.beautysh,
-					require("null-ls").builtins.formatting.prettier,
-					require("null-ls").builtins.formatting.stylua,
-					-- require("null-ls").builtins.diagnostics.revive
+					-- code actions
+					code_actions.eslint_d,
+
+					-- diagnostics
+					diagnostics.eslint_d,
+
+					-- frormatting
+					formatting.eslint_d,
+					formatting.pg_format,
+					formatting.beautysh,
+					formatting.prettierd,
+					-- formatting.prettier,
+					formatting.stylua,
 				},
 			})
 		end,
