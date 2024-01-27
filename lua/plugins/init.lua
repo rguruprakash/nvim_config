@@ -27,58 +27,70 @@ let g:github_enterprise_urls = ['https://github.bus.zalan.do']
 ]])
 
 return {
-	{
-		"b0o/incline.nvim",
-		opts = {},
-		-- Optional: Lazy load Incline
-		event = "VeryLazy",
-	},
-	"simeji/winresizer",
-	"mg979/vim-visual-multi",
-	"tpope/vim-commentary",
-	"tpope/vim-fugitive",
-	"tpope/vim-rhubarb",
-	"nvim-lua/plenary.nvim",
-	"tpope/vim-surround",
-	"nvim-treesitter/nvim-treesitter",
-	"easymotion/vim-easymotion",
-	"mbbill/undotree",
-	{
-		"iamcco/markdown-preview.nvim",
-		build = function()
-			vim.fn["mkdp#util#install"]()
-		end,
-	},
-	{
-		"kristijanhusak/vim-dadbod-ui",
-		dependencies = {
-			{ "tpope/vim-dadbod", lazy = true },
-			{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
-		},
-		cmd = {
-			"DBUI",
-			"DBUIToggle",
-			"DBUIAddConnection",
-			"DBUIFindBuffer",
-		},
-		init = function()
-			-- Your DBUI configuration
-			vim.g.db_ui_use_nerd_fonts = 1
-		end,
-	},
-	{
-		"Wansmer/treesj",
-		keys = { "<space>m", "<space>j", "<space>s" },
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		config = function()
-			require("treesj").setup({ --[[ your config ]]
-			})
-		end,
-	},
-	{
-		"windwp/nvim-ts-autotag",
-		config = function()
-			require("nvim-ts-autotag").setup()
-		end,
-	},
+  {
+    "rguruprakash/simple-note.nvim",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("simple_note").setup()
+    end,
+    keys = {
+      { "<leader>n", "<cmd>lua require('simple_note').listNotes()<CR>", desc = "list notelist notess" },
+    },
+  },
+  {
+    "b0o/incline.nvim",
+    opts = {},
+    -- Optional: Lazy load Incline
+    event = "VeryLazy",
+  },
+  "simeji/winresizer",
+  "mg979/vim-visual-multi",
+  "tpope/vim-commentary",
+  "tpope/vim-fugitive",
+  "tpope/vim-rhubarb",
+  "nvim-lua/plenary.nvim",
+  "tpope/vim-surround",
+  "nvim-treesitter/nvim-treesitter",
+  "easymotion/vim-easymotion",
+  "mbbill/undotree",
+  {
+    "iamcco/markdown-preview.nvim",
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+  },
+  {
+    "kristijanhusak/vim-dadbod-ui",
+    dependencies = {
+      { "tpope/vim-dadbod",                     lazy = true },
+      { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+    },
+    cmd = {
+      "DBUI",
+      "DBUIToggle",
+      "DBUIAddConnection",
+      "DBUIFindBuffer",
+    },
+    init = function()
+      -- Your DBUI configuration
+      vim.g.db_ui_use_nerd_fonts = 1
+    end,
+  },
+  {
+    "Wansmer/treesj",
+    keys = { "<space>m", "<space>j", "<space>s" },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("treesj").setup({ --[[ your config ]]
+      })
+    end,
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    config = function()
+      require("nvim-ts-autotag").setup()
+    end,
+  },
 }

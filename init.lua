@@ -14,10 +14,6 @@ vim.opt.termguicolors = true
 
 require("lazy").setup('plugins')
 
--- require("lazy").setup({
---   "nvim-treesitter/nvim-treesitter",
--- })
-require("custom.notes-scratch")
 require("custom.treesitter")
 
 vim.cmd ([[
