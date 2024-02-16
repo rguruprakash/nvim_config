@@ -1,4 +1,25 @@
 return {
+  {
+    "b0o/incline.nvim",
+    config = function()
+      require("incline").setup({
+        highlight = {
+          groups = {
+            InclineNormal = {
+              default = true,
+              group = "@comment.hint",
+            },
+            InclineNormalNC = {
+              default = true,
+              group = "NormalFloat",
+            },
+          },
+        },
+      })
+    end,
+    -- Optional: Lazy load Incline
+    event = "VeryLazy",
+  },
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },

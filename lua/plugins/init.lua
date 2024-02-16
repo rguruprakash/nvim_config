@@ -27,24 +27,6 @@ let g:github_enterprise_urls = ['https://github.bus.zalan.do']
 ]])
 
 return {
-  {
-    "rguruprakash/simple-note.nvim",
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-    },
-    config = function()
-      require("simple_note").setup()
-    end,
-    keys = {
-      { "<leader>n", "<cmd>lua require('simple_note').listNotes()<CR>", desc = "list notelist notess" },
-    },
-  },
-  {
-    "b0o/incline.nvim",
-    opts = {},
-    -- Optional: Lazy load Incline
-    event = "VeryLazy",
-  },
   "simeji/winresizer",
   "mg979/vim-visual-multi",
   "tpope/vim-commentary",

@@ -65,19 +65,38 @@
 -- vim.cmd([[ execute 'Neotest summary' ]])
 --
 -- Create a new empty buffer
-local buf = vim.api.nvim_create_buf(false, true)
+-- local buf = vim.api.nvim_create_buf(false, true)
 
 -- Define the window properties
-local win_opts = {
-	relative = "editor",
-	width = 20,
-	height = 10,
-	col = 10,
-	row = 10,
-	style = "minimal",
-	bufpos = { 1, 1 },
-	focusable = true,
-}
+-- local win_opts = {
+-- 	relative = "editor",
+-- 	width = 20,
+-- 	height = 10,
+-- 	col = 10,
+-- 	row = 10,
+-- 	style = "minimal",
+-- 	bufpos = { 1, 1 },
+-- 	focusable = true,
+-- }
 
 -- Create the floating window
-local win = vim.api.nvim_open_win(buf, true, win_opts)
+-- local win = vim.api.nvim_open_win(buf, true, win_opts)
+--
+-- local notes_path = vim.fn.expand('~/notes/')
+-- local full_path = notes_path .. 'test' .. '.md'
+-- local file = io.open(full_path, "a")
+-- local a = ""
+-- if a ~= "" then
+--   vim.notify("a is not empty")
+-- else
+--   vim.notify("a is empty")
+-- end
+-- vim.notify(full_path);
+-- vim.notify(vim.inspect(file));
+
+-- local bufnr = vim.api.nvim_get_current_buf()
+-- local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+local a = {}
+table.insert(a, "a")
+-- vim.notify(vim.inspect(require("null-ls.sources").get_available(filetype)))
+vim.notify(#a > 1)

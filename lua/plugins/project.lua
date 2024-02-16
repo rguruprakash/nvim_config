@@ -4,7 +4,7 @@ return {
     dependencies = {
       "nvim-telescope/telescope.nvim",
     },
-    event = "VeryLazy",
+    lazy = false,
 		config = function()
 			require("project_nvim").setup({
 				detection_methods = {

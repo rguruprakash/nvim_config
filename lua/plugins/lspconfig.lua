@@ -1,3 +1,7 @@
+vim.diagnostic.config({
+	float = { border = "single" },
+})
+
 local on_attach = function(client, bufnr)
 	local opts = { noremap = true, silent = true }
 	vim.keymap.set("n", "<space>e", require("telescope.builtin").diagnostics, opts)
@@ -28,7 +32,9 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "<space>wl", function()
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 	end, bufopts)
-	vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
+	vim.keymap.set("n", "<space>d", function()
+		builtin.lsp_type_definitions({ show_line = false })
+	end, bufopts)
 	vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
 	vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
 	vim.keymap.set("n", "<space>oi", function()
@@ -42,11 +48,29 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "gr", function()
 		builtin.lsp_references({ show_line = false })
 	end, {})
-	vim.keymap.set("n", "<space>f", function()
-		vim.lsp.buf.format({ async = true })
-	end, bufopts)
-	vim.keymap.set("v", "<space>f", function()
-		vim.lsp.buf.range_formatting({ async = true })
+	vim.keymap.set({ "n", "v" }, "<space>f", function()
+		local clients = vim.lsp.get_clients({ bufnr = bufnr })
+		local formatters = {}
+
+		for _, c in pairs(clients) do
+			if c.server_capabilities.documentFormattingProvider then
+				table.insert(formatters, c.name)
+			end
+		end
+
+		if #formatters > 1 then
+			vim.ui.select(formatters, { prompt = "Select a formatter" }, function(_, choice)
+				if not choice then
+					print("No formatter selected")
+					return
+				end
+
+				local formatter = formatters[choice]
+				vim.lsp.buf.format({ async = true, name = formatter })
+			end)
+		else
+			vim.lsp.buf.format({ async = true, name = formatters[1] })
+		end
 	end, bufopts)
 
 	if client.server_capabilities.documentHighlightProvider then
@@ -162,7 +186,7 @@ return {
 			local hover = null_ls.builtins.hover
 			local completion = null_ls.builtins.completion
 			null_ls.setup({
-        border = "single",
+				border = "single",
 				on_attach = on_attach,
 				sources = {
 					-- code actions
