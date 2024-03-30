@@ -29,6 +29,14 @@ return {
   {
     "hrsh7th/nvim-cmp",
     config = function()
+      local has_words_before = function()
+        if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+          return false
+        end
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0
+            and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+      end
       vim.cmd([[
         set completeopt=menu,menuone,noselect
       ]])
@@ -46,7 +54,7 @@ return {
           documentation = cmp.config.window.bordered(),
         },
         experimental = {
-          ghost_text = true,
+          ghost_text = false,
         },
         formatting = {
           format = require("lspkind").cmp_format({
@@ -58,29 +66,37 @@ return {
         mapping = cmp.mapping.preset.insert({
           ["<C-u>"] = cmp.mapping.scroll_docs(-4),
           ["<C-d>"] = cmp.mapping.scroll_docs(4),
-          ["<C-Space>"] = cmp.mapping.complete({}),
+          ["<C-Space>"] = cmp.mapping.complete(),
           ["<CR>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Insert,
             select = false,
           }),
-          ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif ls.expand_or_jumpable() then
-              ls.expand_or_jump()
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-          ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif ls.jumpable(-1) then
-              ls.jump(-1)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
+
+          ["<Tab>"] = cmp.mapping(
+            vim.schedule_wrap(function(fallback)
+              if cmp.visible() and has_words_before() then
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+              elseif ls.expand_or_jumpable() then
+                ls.expand_or_jump()
+              else
+                fallback()
+              end
+            end),
+            { "i", "s" }
+          ),
+
+          ["<S-Tab>"] = cmp.mapping(
+            vim.schedule_wrap(function(fallback)
+              if cmp.visible() and has_words_before() then
+                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+              elseif ls.jumpable(-1) then
+                ls.jump(-1)
+              else
+                fallback()
+              end
+            end),
+            { "i", "s" }
+          ),
         }),
         sources = {
           { name = "copilot",                 priority = 1200, max_item_count = 5 },

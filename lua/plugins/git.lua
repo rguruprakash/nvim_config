@@ -1,4 +1,5 @@
 return {
+	"sindrets/diffview.nvim",
 	-- use({
 	--   "sindrets/diffview.nvim",
 	--   requires = "nvim-lua/plenary.nvim",

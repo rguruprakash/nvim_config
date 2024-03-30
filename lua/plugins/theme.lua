@@ -1,5 +1,5 @@
 return {
-	"Mofiqul/vscode.nvim",
+	-- "Mofiqul/vscode.nvim",
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",

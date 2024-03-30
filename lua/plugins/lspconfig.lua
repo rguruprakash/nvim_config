@@ -1,5 +1,6 @@
 vim.diagnostic.config({
 	float = { border = "single" },
+	virtual_text = false,
 })
 
 local on_attach = function(client, bufnr)
@@ -30,7 +31,7 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
 	vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
 	vim.keymap.set("n", "<space>wl", function()
-		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+		vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 	end, bufopts)
 	vim.keymap.set("n", "<space>d", function()
 		builtin.lsp_type_definitions({ show_line = false })
@@ -141,6 +142,10 @@ return {
 				on_attach = on_attach,
 				capabilities = capabilities,
 			})
+			require("lspconfig").ltex.setup({
+				on_attach = on_attach,
+				capabilities = capabilities,
+			})
 			require("lspconfig").bashls.setup({
 				on_attach = on_attach,
 				capabilities = capabilities,
@@ -153,10 +158,6 @@ return {
 						kubernetes = "*.yaml",
 					},
 				},
-			})
-			require("lspconfig").grammarly.setup({
-				on_attach = on_attach,
-				capabilities = capabilities,
 			})
 			require("lspconfig").docker_compose_language_service.setup({
 				on_attach = on_attach,
@@ -177,7 +178,9 @@ return {
 	},
 	{
 		"nvimtools/none-ls.nvim",
-		-- "jose-elias-alvarez/null-ls.nvim",
+		dependencies = {
+			"nvimtools/none-ls-extras.nvim",
+		},
 		config = function()
 			local null_ls = require("null-ls")
 			local code_actions = null_ls.builtins.code_actions
@@ -190,15 +193,17 @@ return {
 				on_attach = on_attach,
 				sources = {
 					-- code actions
-					code_actions.eslint_d,
+					require("none-ls.code_actions.eslint_d"),
 
 					-- diagnostics
-					diagnostics.eslint_d,
+					require("none-ls.diagnostics.eslint_d"),
+					-- diagnostics.codespell,
+					-- diagnostics.textidote,
 
-					-- frormatting
-					formatting.eslint_d,
+					-- formatting
+					require("none-ls.formatting.eslint_d"),
 					formatting.pg_format,
-					formatting.beautysh,
+					formatting.shfmt,
 					formatting.prettierd,
 					-- formatting.prettier,
 					formatting.stylua,

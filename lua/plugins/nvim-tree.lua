@@ -58,6 +58,13 @@ return {
 					end
 					vim.keymap.set("n", "S", search_in_node, opts("Search in node"))
 				end,
+				actions = {
+					open_file = {
+						window_picker = {
+							enable = false,
+						},
+					},
+				},
 			})
 		end,
 		keys = {

@@ -4,6 +4,14 @@ return {
     config = function()
       local dap = require("dap")
       -- ADAPTERS
+      dap.adapters = {
+        -- before using this adapter be sure to launch the adapter server first with command 'js-debug-adapter'
+        ["pwa-node"] = {
+          type = "server",
+          host = "localhost",
+          port = 8123
+        }
+      }
       dap.adapters.node2 = {
         type = "executable",
         command = "node-debug2-adapter",
@@ -20,7 +28,7 @@ return {
       }
 
       for i, ext in ipairs(exts) do
-        dap.configurations[ext]= {
+        dap.configurations[ext] = {
           {
             -- For this to work you need to make sure the node process is started with the `--inspect` flag.
             name = "Attach to process",
@@ -34,10 +42,12 @@ return {
       end
     end,
   },
+
   {
     "rcarriga/nvim-dap-ui",
     dependencies = {
       "mfussenegger/nvim-dap",
+      "nvim-neotest/nvim-nio"
     },
     config = function()
       require("dapui").setup({

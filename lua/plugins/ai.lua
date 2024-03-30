@@ -38,6 +38,12 @@ return {
 				":CopilotChat ",
 				desc = "CopilotChat - Open in vertical split",
 			},
+			{
+				"<space>ccr",
+				":CopilotChatReset ",
+				desc = "CopilotChat - Rest copilot chat",
+			},
+			-- {
 			-- {
 			--   "<space>ccv",
 			--   ":CopilotChatVisual",
