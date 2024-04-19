@@ -1,2 +1,3 @@
 Close all buffers | :%bd 
 Search in selection | /\%Vpattern_to_search
+Curl single line to multiline | :%s/ -/ \\\r -/g

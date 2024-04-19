@@ -28,21 +28,11 @@ let g:github_enterprise_urls = ['https://github.bus.zalan.do']
 
 return {
   "simeji/winresizer",
-  -- "mg979/vim-visual-multi",
   "tpope/vim-commentary",
   "tpope/vim-fugitive",
   "tpope/vim-rhubarb",
-  -- "nvim-lua/plenary.nvim",
   "tpope/vim-surround",
   "nvim-treesitter/nvim-treesitter",
-  -- "easymotion/vim-easymotion",
-  -- "mbbill/undotree",
-  -- {
-  --   'dmmulroy/ts-error-translator.nvim',
-  --   config = function ()
-  --     require("ts-error-translator").setup()
-  --   end
-  -- },
   {
     "AckslD/nvim-neoclip.lua",
     dependencies = {

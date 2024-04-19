@@ -24,7 +24,7 @@ return {
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown({}),
 					},
-					ive_grep_args = {
+					live_grep_args = {
 						auto_quoting = true, -- enable/disable auto-quoting
 						-- define mappings, e.g.
 						mappings = { -- extend mappings
