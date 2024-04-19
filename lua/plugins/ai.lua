@@ -40,7 +40,7 @@ return {
 			},
 			{
 				"<space>ccr",
-				":CopilotChatReset ",
+				":CopilotChatReset<cr>",
 				desc = "CopilotChat - Rest copilot chat",
 			},
 			-- {

@@ -5,7 +5,7 @@ return {
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope-live-grep-args.nvim",
 		},
-    event = "VeryLazy",
+		event = "VeryLazy",
 		config = function()
 			local telescope = require("telescope")
 			local lga_actions = require("telescope-live-grep-args.actions")
