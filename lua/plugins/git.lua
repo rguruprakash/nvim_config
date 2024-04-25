@@ -54,4 +54,9 @@ return {
 			{ "<leader>lg", ":LazyGit<cr>", desc = "Lazygit" },
 		},
 	},
+	{
+		"moyiz/git-dev.nvim",
+		event = "VeryLazy",
+		opts = {},
+	},
 }
