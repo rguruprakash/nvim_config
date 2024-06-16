@@ -13,8 +13,8 @@ return {
 				defaults = {
 					layout_strategy = "vertical",
 					mappings = {
-						i = { ["<c-x>"] = require("trouble.providers.telescope").open_with_trouble },
-						n = { ["<c-x>"] = require("trouble.providers.telescope").open_with_trouble },
+						i = { ["<c-x>"] = require("trouble.sources.telescope").open },
+						n = { ["<c-x>"] = require("trouble.sources.telescope").open },
 					},
 				},
 				pickers = {

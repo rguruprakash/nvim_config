@@ -3,6 +3,9 @@ return {
     "b0o/incline.nvim",
     config = function()
       require("incline").setup({
+        hide = {
+          cursorline = "focused_win",
+        },
         highlight = {
           groups = {
             InclineNormal = {

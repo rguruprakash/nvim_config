@@ -81,6 +81,10 @@ local on_attach = function(client, bufnr)
       autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
     ]])
 	end
+
+	if client.server_capabilities.inlayHintProvider then
+		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+	end
 end
 
 local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
@@ -92,7 +96,7 @@ end
 return {
 	{
 		"neovim/nvim-lspconfig",
-		dependencies = { "nvim-cmp", "neodev.nvim" },
+		dependencies = { "hrsh7th/nvim-cmp", "folke/neodev.nvim" },
 		config = function()
 			require("neodev").setup()
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -130,6 +134,9 @@ return {
 						-- Do not send telemetry data containing a randomized but unique identifier
 						telemetry = {
 							enable = false,
+						},
+						completion = {
+							callSnippet = "Replace",
 						},
 					},
 				},
@@ -170,6 +177,7 @@ return {
 
 			capabilities.textDocument.completion.completionItem.snippetSupport = true
 			require("lspconfig").jsonls.setup({
+				on_attach = on_attach,
 				capabilities = capabilities,
 			})
 
@@ -207,6 +215,7 @@ return {
 					formatting.prettierd,
 					-- formatting.prettier,
 					formatting.stylua,
+					formatting.remark,
 				},
 			})
 		end,

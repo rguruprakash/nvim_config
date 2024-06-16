@@ -2,7 +2,7 @@
 -- vim.keymap.set("x", "<space>p", '"_dP')
 
 -- Find and replace text under cursor
--- vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 return {
 	"folke/which-key.nvim",

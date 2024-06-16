@@ -34,6 +34,11 @@ return {
   "tpope/vim-surround",
   "nvim-treesitter/nvim-treesitter",
   {
+    "m4xshen/hardtime.nvim",
+    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    opts = {}
+  },
+  {
     "AckslD/nvim-neoclip.lua",
     dependencies = {
       { "nvim-telescope/telescope.nvim" },
@@ -41,9 +46,9 @@ return {
     config = function()
       require("neoclip").setup()
     end,
-		keys = {
-			{ "<C-y>", "<cmd>Telescope neoclip<cr>", desc = "Open yank list" },
-		},
+    keys = {
+      { "<C-y>", "<cmd>Telescope neoclip<cr>", desc = "Open yank list" },
+    },
   },
   {
     "iamcco/markdown-preview.nvim",

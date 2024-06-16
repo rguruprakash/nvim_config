@@ -10,6 +10,7 @@ return {
 			require("nvim-tree").setup({
 				sync_root_with_cwd = true,
 				respect_buf_cwd = true,
+        disable_netrw = false,
 				update_focused_file = {
 					enable = true,
 					update_root = true,
@@ -71,5 +72,13 @@ return {
 			{ "_", ":NvimTreeToggle<CR>", desc = "File tree toggle" },
 			{ "<leader>-", ":NvimTreeFindFile!<CR>", desc = "Find file in file tree" },
 		},
+	},
+	{
+		"stevearc/oil.nvim",
+		opts = {
+      default_file_explorer = false,
+    },
+		-- Optional dependencies
+		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
 }
