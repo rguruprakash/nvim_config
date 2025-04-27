@@ -1,3 +1,6 @@
 Close all buffers | :%bd 
 Search in selection | /\%Vpattern_to_search
 Curl single line to multiline | :%s/ -/ \\\r -/g
+diff two files | :windo diffthis
+Clear current buffer (don't copy content to clipboard) | :%d _
+Clear current buffer (copy content to clipboard) | :%d

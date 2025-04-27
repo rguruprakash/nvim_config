@@ -25,7 +25,7 @@ return {
 						require("telescope.themes").get_dropdown({}),
 					},
 					live_grep_args = {
-						auto_quoting = true, -- enable/disable auto-quoting
+						auto_quoting = false, -- enable/disable auto-quoting
 						-- define mappings, e.g.
 						mappings = { -- extend mappings
 							i = {

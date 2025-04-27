@@ -21,12 +21,34 @@ set cursorline
 set noswapfile
 set updatetime=100
 set laststatus=3
+set splitright
+set splitbelow
 
 " fugitive
 let g:github_enterprise_urls = ['https://github.bus.zalan.do']
 ]])
 
 return {
+  {
+    "oysandvik94/curl.nvim",
+    cmd = { "CurlOpen" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = true,
+  },
+  "chaoren/vim-wordmotion", -- camelCase and snake_case motions
+  {
+    "folke/zen-mode.nvim",
+    opts = {
+      window = {
+        width = 180,
+      },
+    },
+    keys = {
+      { "<leader>zm", "<cmd>ZenMode<cr>", desc = "Zen mode" },
+    },
+  },
   "simeji/winresizer",
   "tpope/vim-commentary",
   "tpope/vim-fugitive",
@@ -36,7 +58,7 @@ return {
   {
     "m4xshen/hardtime.nvim",
     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-    opts = {}
+    opts = {},
   },
   {
     "AckslD/nvim-neoclip.lua",

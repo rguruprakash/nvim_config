@@ -57,7 +57,12 @@ return {
 						local node = api.tree.get_node_under_cursor()
 						require("telescope.builtin").live_grep({ cwd = node.absolute_path })
 					end
+          local function open_in_vscode()
+            local node = api.tree.get_node_under_cursor()
+            vim.cmd("silent !code " .. node.absolute_path)
+          end
 					vim.keymap.set("n", "S", search_in_node, opts("Search in node"))
+					vim.keymap.set("n", "O", open_in_vscode, opts("Open in vscode"))
 				end,
 				actions = {
 					open_file = {

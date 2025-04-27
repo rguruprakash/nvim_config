@@ -21,8 +21,15 @@ return {
 	},
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
+    branch = "main",
+		event = "VeryLazy",
+		dependencies = {
+			{ "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
+			{ "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+		},
+		build = "make tiktoken", -- Only on MacOS or Linux
 		opts = {
-			show_help = "yes", -- Show help text for CopilotChatInPlace, default: yes
+			show_help = false, -- Show help text for CopilotChatInPlace, default: yes
 			debug = false, -- Enable or disable debug mode, the log file will be in ~/.local/state/nvim/CopilotChat.nvim.log
 			disable_extra_info = "yes", -- Disable extra information (e.g: system prompt) in the response.
 			window = {
@@ -39,13 +46,7 @@ return {
 				zindex = 1, -- determines if window is on top or below other floating windows
 			},
 		},
-		build = function()
-			vim.notify("Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim.")
-		end,
-		event = "VeryLazy",
 		keys = {
-			{ "<space>cce", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
-			{ "<space>cct", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
 			{
 				"<space>cc",
 				":CopilotChatOpen<cr>",
@@ -56,6 +57,89 @@ return {
 				":CopilotChatReset<cr>",
 				desc = "CopilotChat - Rest copilot chat",
 			},
+		},
+	},
+	{
+		"yetone/avante.nvim",
+		event = "VeryLazy",
+		lazy = false,
+		version = false, -- set this if you want to always pull the latest change
+		opts = {
+			provider = "openai",
+			auto_suggestions_provider = "openai",
+			openai = {
+				endpoint = "https://zllm.data.zalan.do/v1",
+				model = "openai/gpt-4o",
+				api_key_name = "cmd:ztoken",
+				timeout = 30000, -- timeout in milliseconds
+				temperature = 0, -- adjust if needed
+				max_tokens = 4096,
+			},
+			-- vendors = {
+			-- 	["zalando-openai"] = {
+			-- 		__inherited_from = "openai",
+			-- 		endpoint = "https://zllm.data.zalan.do/v1",
+			-- 		model = "openai/gpt-4o",
+			-- 		api_key_name = "cmd:ztoken",
+			-- 	},
+			-- },
+			windows = {
+				width = 50, -- default % based on available width
+				ask = {
+					start_insert = false, -- Start insert mode when opening the ask window
+				},
+			},
+			mappings = {
+				sidebar = {
+					close = { "q" },
+					close_from_input = { normal = "q" },
+				},
+			},
+		},
+		-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+		build = "make",
+		-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"stevearc/dressing.nvim",
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+			--- The below dependencies are optional,
+			"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+			"zbirenbaum/copilot.lua", -- for providers='copilot'
+			{
+				-- support for image pasting
+				"HakonHarnes/img-clip.nvim",
+				event = "VeryLazy",
+				opts = {
+					-- recommended settings
+					default = {
+						embed_image_as_base64 = false,
+						prompt_for_file_name = false,
+						drag_and_drop = {
+							insert_mode = true,
+						},
+						-- required for Windows users
+						use_absolute_path = true,
+					},
+				},
+			},
+			{
+				-- Make sure to set this up properly if you have lazy=true
+				"MeanderingProgrammer/render-markdown.nvim",
+				opts = {
+					file_types = { "markdown", "Avante" },
+				},
+				ft = { "markdown", "Avante" },
+			},
+		},
+	},
+	{
+		"olimorris/codecompanion.nvim",
+		opts = {},
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
 		},
 	},
 }

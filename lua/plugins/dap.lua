@@ -19,12 +19,65 @@ return {
         -- args =  { vim.fn.stdpath('data') .. '/mason/packages/node-debug2-adapter/out/src/nodeDebug.js' },
         args = {},
       }
+      dap.adapters.delve = {
+        type = "server",
+        port = "${port}",
+        executable = {
+          command = "dlv",
+          args = { "dap", "-l", "127.0.0.1:${port}" },
+        },
+      }
 
       local exts = {
         "javascript",
         "typescript",
         "javascriptreact",
         "typescriptreact",
+      }
+      dap.configurations.go = {
+        {
+          type = "delve",
+          name = "Debug",
+          request = "attach",
+          port = 8080,
+          processId = require("dap.utils").pick_process,
+        },
+        {
+          type = "delve",
+          name = "Debug test",
+          request = "launch",
+          mode = "test",
+          program = "./${relativeFileDirname}",
+          args = function()
+            return coroutine.create(function(dap_run_co)
+              local command = "go test " .. vim.fn.expand("%:p:h") .. "/... -list ."
+              local output = vim.fn.system(command)
+              local lines = vim.split(output, "\n")
+              local tests = {}
+              local args = {}
+              for _, line in pairs(lines) do
+                if line ~= "" then
+                  table.insert(tests, vim.fn.trim(line))
+                end
+              end
+              vim.ui.select(tests, { label = "tests> " }, function(choice)
+                if choice == nil then
+                  coroutine.resume(dap_run_co, args)
+                else
+                  table.insert(args, "-test.run")
+                  table.insert(args, choice)
+                  vim.ui.input({ prompt = "Testname in suite" }, function(input)
+                    if input ~= nil then
+                      table.insert(args, "-testify.m")
+                      table.insert(args, input)
+                    end
+                    coroutine.resume(dap_run_co, args)
+                  end)
+                end
+              end)
+            end)
+          end,
+        },
       }
 
       for i, ext in ipairs(exts) do
@@ -102,8 +155,8 @@ return {
       --   dapui.close()
       -- end
 
-      vim.fn.sign_define("DapBreakpoint", { text = "🙂", texthl = "", linehl = "", numhl = "" })
-      vim.fn.sign_define("DapStopped", { text = "🥶", texthl = "", linehl = "", numhl = "" })
+      vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DapBreakpoint", linehl = "", numhl = "" })
+      vim.fn.sign_define("DapStopped", { text = "﯀", texthl = "DapStopped", linehl = "", numhl = "" })
     end,
   },
   {
